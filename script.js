@@ -12,15 +12,37 @@ const lautta = {
         fill(83, 83, 113)
         rect(this.x, this.y, this.leveys, this.korkeus)
     },
+    paivita: function() {
+        this.x = mouseX
+    }
+}
+
+// luokka, josta tehdään pomppijoita
+class Pomppija {
+    constructor(x, y, xMuutos, yMuutos) {
+        this.x = x
+        this.y = y
+        this.xMuutos = xMuutos
+        this.yMuutos = yMuutos
+        this.koko = 50
+    }
+
+    piirra() {
+        rectMode(CENTER)
+        fill(83, 183, 113)
+        rect(this.x, this.y, this.koko, this.koko)
+    }
 }
 
 // setup kutsutaan kerran sivun ladattua
 function setup() {
     createCanvas(pelinLeveys, pelinKorkeus)
-    background(100, 200, 100)
 }
 
 // draw kutsutaan toistuvasti, eli on piirtoluuppi
 function draw() {
+    background(100, 200, 100)
     lautta.piirra()
+
+    lautta.paivita()
 }
