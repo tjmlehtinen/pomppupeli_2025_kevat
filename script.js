@@ -5,7 +5,7 @@ const pelinKorkeus = 400
 const lautta = {
     x: pelinLeveys / 2,
     y: pelinKorkeus - 50,
-    leveys: 100,
+    leveys: 300,
     korkeus: 40,
     piirra: function() {
         rectMode(CENTER)
@@ -14,6 +14,11 @@ const lautta = {
     },
     paivita: function() {
         this.x = mouseX
+    },
+    osuuko: function(x, y) {
+        const osuukoX = this.x - (this.leveys / 2) < x && x < this.x + (this.leveys / 2)
+        const osuukoY = this.y - (this.korkeus / 2) < y && y < this.y + (this.korkeus / 2)
+        return osuukoX && osuukoY
     }
 }
 
@@ -36,7 +41,7 @@ class Pomppija {
     paivita() {
         this.x += this.xMuutos
         this.y += this.yMuutos
-        if (this.y >= pelinKorkeus) {
+        if (lautta.osuuko(this.x, this.y)) {
             this.yMuutos *= -1
         }
         this.yMuutos += 1
@@ -45,9 +50,11 @@ class Pomppija {
 
 const testiPomppija = new Pomppija(200, 100, 0, 0)
 
+
 // setup kutsutaan kerran sivun ladattua
 function setup() {
     createCanvas(pelinLeveys, pelinKorkeus)
+    frameRate(10)
 }
 
 // draw kutsutaan toistuvasti, eli on piirtoluuppi
