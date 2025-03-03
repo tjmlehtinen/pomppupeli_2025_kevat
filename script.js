@@ -29,10 +29,21 @@ class Pomppija {
 
     piirra() {
         rectMode(CENTER)
-        fill(83, 183, 113)
+        fill(183, 83, 113)
         rect(this.x, this.y, this.koko, this.koko)
     }
+
+    paivita() {
+        this.x += this.xMuutos
+        this.y += this.yMuutos
+        if (this.y >= pelinKorkeus) {
+            this.yMuutos *= -1
+        }
+        this.yMuutos += 1
+    }
 }
+
+const testiPomppija = new Pomppija(200, 100, 0, 0)
 
 // setup kutsutaan kerran sivun ladattua
 function setup() {
@@ -43,6 +54,8 @@ function setup() {
 function draw() {
     background(100, 200, 100)
     lautta.piirra()
+    testiPomppija.piirra()
 
     lautta.paivita()
+    testiPomppija.paivita()
 }
