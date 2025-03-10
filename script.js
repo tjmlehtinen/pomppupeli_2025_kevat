@@ -48,21 +48,32 @@ class Pomppija {
     }
 }
 
-const testiPomppija = new Pomppija(200, 100, 0, 0)
+let pomppijat = []
 
+let pomppuIntervalli
+
+function teePomppijoita() {
+    pomppuIntervalli = setInterval(function() {
+        const uusiPomppija = new Pomppija(0, 50, 10, 0)
+        pomppijat.push(uusiPomppija)
+        console.log("Pomppijoita:", pomppijat.length)
+    }, 1000)
+}
 
 // setup kutsutaan kerran sivun ladattua
 function setup() {
     createCanvas(pelinLeveys, pelinKorkeus)
     frameRate(10)
+    teePomppijoita()
 }
 
 // draw kutsutaan toistuvasti, eli on piirtoluuppi
 function draw() {
     background(100, 200, 100)
     lautta.piirra()
-    testiPomppija.piirra()
-
     lautta.paivita()
-    testiPomppija.paivita()
+    for (const pomppija of pomppijat) {
+        pomppija.piirra()
+        pomppija.paivita()
+    }
 }
