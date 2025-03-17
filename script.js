@@ -1,6 +1,16 @@
 const pelinLeveys = 600
 const pelinKorkeus = 400
 
+let elamat = 3
+let pisteet = 0
+
+// Satunnainen kokonaisluku
+function satunnainenInt(min, max) {
+    const satunnainenLiukuluku = (max - min) * Math.random() + min
+    return Math.floor(satunnainenLiukuluku)
+}
+
+
 // tehdään javascript-oliona lautta, johon pomppijat törmäävät
 const lautta = {
     x: pelinLeveys / 2,
@@ -54,9 +64,9 @@ let pomppuIntervalli
 
 function teePomppijoita() {
     pomppuIntervalli = setInterval(function() {
-        const uusiPomppija = new Pomppija(0, 50, 10, 0)
+        const nopeus = satunnainenInt(3, 15)
+        const uusiPomppija = new Pomppija(0, 50, nopeus, 0)
         pomppijat.push(uusiPomppija)
-        console.log("Pomppijoita:", pomppijat.length)
     }, 1000)
 }
 
@@ -75,5 +85,14 @@ function draw() {
     for (const pomppija of pomppijat) {
         pomppija.piirra()
         pomppija.paivita()
+        if (pomppija.x > pelinLeveys) {
+            pisteet += 1
+            console.log("Pisteet:", pisteet)
+        }
+        else if (pomppija.y > pelinKorkeus) {
+            elamat -= 1
+            console.log("Elämät:", elamat)
+        }
     }
+    pomppijat = pomppijat.filter((p) => p.x <= pelinLeveys && p.y <= pelinKorkeus)
 }
