@@ -1,5 +1,5 @@
 const pelinLeveys = 600
-const pelinKorkeus = 400
+const pelinKorkeus = 500
 
 let elamat = 3
 let pisteet = 0
@@ -83,16 +83,25 @@ function draw() {
     lautta.piirra()
     lautta.paivita()
     for (const pomppija of pomppijat) {
-        pomppija.piirra()
         pomppija.paivita()
+        pomppija.piirra()
         if (pomppija.x > pelinLeveys) {
             pisteet += 1
-            console.log("Pisteet:", pisteet)
         }
         else if (pomppija.y > pelinKorkeus) {
             elamat -= 1
-            console.log("Elämät:", elamat)
+            if (elamat === 0) {
+                gameOver()
+            }
         }
+        textSize(20)
+        fill(13, 13, 187)
+        text("Pisteet: " + pisteet + " Elämät: " + elamat, 10, 20)
     }
     pomppijat = pomppijat.filter((p) => p.x <= pelinLeveys && p.y <= pelinKorkeus)
+}
+
+function gameOver() {
+    clearInterval(pomppuIntervalli)
+    noLoop()
 }
