@@ -4,6 +4,9 @@ const pelinKorkeus = 500
 let elamat = 3
 let pisteet = 0
 
+const aloitusnappi = document.getElementById("aloitusnappi")
+aloitusnappi.addEventListener("click", aloitaPeli)
+
 // Satunnainen kokonaisluku
 function satunnainenInt(min, max) {
     const satunnainenLiukuluku = (max - min) * Math.random() + min
@@ -72,9 +75,10 @@ function teePomppijoita() {
 
 // setup kutsutaan kerran sivun ladattua
 function setup() {
-    createCanvas(pelinLeveys, pelinKorkeus)
+    const peliruutu = createCanvas(pelinLeveys, pelinKorkeus)
+    peliruutu.parent("peliruudun-div")
     frameRate(10)
-    teePomppijoita()
+    noLoop()
 }
 
 // draw kutsutaan toistuvasti, eli on piirtoluuppi
@@ -101,7 +105,19 @@ function draw() {
     pomppijat = pomppijat.filter((p) => p.x <= pelinLeveys && p.y <= pelinKorkeus)
 }
 
+function aloitaPeli() {
+    clearInterval(pomppuIntervalli)
+    elamat = 3
+    pisteet = 0
+    pomppijat = []
+    teePomppijoita()
+    loop()
+}
+
 function gameOver() {
     clearInterval(pomppuIntervalli)
+    textSize(50)
+    fill(183, 13, 187)
+    text("GAME OVER", 100, 200)
     noLoop()
 }
